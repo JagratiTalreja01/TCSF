@@ -1,0 +1,29 @@
+{
+  "model": "MultimodalSwin-UNet",
+  "checkpoint": "outputs/checkpoints/SwinUNet_200ep_seed2026/best_model.pth",
+  "threshold": 0.5,
+  "macro": {
+    "IoU": 0.5187492278557362,
+    "IoU_std": 0.3018673546257231,
+    "Dice": 0.6253840940573216,
+    "Dice_std": 0.2967756820045015,
+    "Precision": 0.6606180209284825,
+    "Precision_std": 0.2853802129197756,
+    "Recall": 0.6753303523315496,
+    "Recall_std": 0.28953000714218535,
+    "F1": 0.6253840940573216,
+    "F1_std": 0.2967756820045015,
+    "PixelAcc": 0.9692299736875356,
+    "PixelAcc_std": 0.059491272776365345,
+    "num_samples": 90
+  },
+  "micro": {
+    "IoU": 0.7483461247810917,
+    "Dice": 0.856061753646969,
+    "Precision": 0.8714205212417448,
+    "Recall": 0.8412350051128494,
+    "F1": 0.856061753646969,
+    "PixelAcc": 0.9692299736870712,
+    "num_samples": 90
+  }
+}

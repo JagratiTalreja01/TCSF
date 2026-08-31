@@ -1,0 +1,14 @@
+{
+  "model": "MultimodalDeepLabV3Plus",
+  "checkpoint": "outputs/checkpoints/DeepLabV3Plus_200ep_seed2026/best_model.pth",
+  "config": "configs/deeplabv3plus_base.yaml",
+  "threshold": 0.5,
+  "rgb_indices": [
+    3,
+    2,
+    1
+  ],
+  "overlay_alpha": 0.45,
+  "probability_definition": "sigmoid(final_pred)",
+  "binary_definition": "probability > 0.5"
+}

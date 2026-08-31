@@ -1,0 +1,14 @@
+{
+  "model": "MultimodalVisionMamba",
+  "checkpoint": "outputs/checkpoints/VisionMamba_200ep_seed2026/best_model.pth",
+  "config": "configs/vision_mamba_base.yaml",
+  "threshold": 0.5,
+  "rgb_indices": [
+    3,
+    2,
+    1
+  ],
+  "overlay_alpha": 0.45,
+  "probability_definition": "sigmoid(final_pred)",
+  "binary_definition": "probability > 0.5"
+}

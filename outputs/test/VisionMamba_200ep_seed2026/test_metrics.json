@@ -1,0 +1,29 @@
+{
+  "model": "MultimodalVisionMamba",
+  "checkpoint": "outputs/checkpoints/VisionMamba_200ep_seed2026/best_model.pth",
+  "threshold": 0.5,
+  "macro": {
+    "IoU": 0.5280006271027772,
+    "IoU_std": 0.3058446255185092,
+    "Dice": 0.6320253174601278,
+    "Dice_std": 0.3005992082191991,
+    "Precision": 0.6780669246931729,
+    "Precision_std": 0.2893223406796838,
+    "Recall": 0.6947730261845464,
+    "Recall_std": 0.2969677056152821,
+    "F1": 0.6320253174601278,
+    "F1_std": 0.3005992082191991,
+    "PixelAcc": 0.9618999905062235,
+    "PixelAcc_std": 0.09539236857060739,
+    "num_samples": 90
+  },
+  "micro": {
+    "IoU": 0.6809923854846077,
+    "Dice": 0.8102266153789293,
+    "Precision": 0.8840941886761208,
+    "Recall": 0.7477507668906842,
+    "F1": 0.8102266153789293,
+    "PixelAcc": 0.9618999905056488,
+    "num_samples": 90
+  }
+}

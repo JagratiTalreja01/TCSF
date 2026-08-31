@@ -1,0 +1,62 @@
+TCSF v3.1 Publication Evaluation
+========================================
+Checkpoint: outputs/checkpoints/TCSF_v31_seed2026/best_model.pth
+Device: cuda
+GPU: NVIDIA RTX A4000
+
+Model complexity
+----------------------------------------
+Total parameters: 21,019,249
+Trainable parameters: 21,019,249
+Model size (MB): 80.25
+Profiler: fvcore
+GMACs: N/A
+GFLOPs: 67.041
+Profiler note: FLOPs may be underestimated when custom operations are listed as unsupported.
+
+Runtime
+----------------------------------------
+fp32, batch size 1:
+  Mean latency/batch (ms): 77.118
+  Mean latency/image (ms): 77.118
+  FPS: 12.967
+  Peak allocated GPU memory (MB): 285.78
+  Peak reserved GPU memory (MB): 348.00
+amp_fp16, batch size 1:
+  Mean latency/batch (ms): 403.311
+  Mean latency/image (ms): 403.311
+  FPS: 2.479
+  Peak allocated GPU memory (MB): 260.96
+  Peak reserved GPU memory (MB): 308.00
+
+Test-set metrics (macro mean ± sample SD)
+----------------------------------------
+IoU: 0.5803 ± 0.2916
+Dice: 0.6833 ± 0.2863
+Precision: 0.7718 ± 0.2127
+Recall: 0.6982 ± 0.3053
+F1: 0.6833 ± 0.2863
+PixelAcc: 0.9697 ± 0.0555
+
+Test-set metrics (micro/global)
+----------------------------------------
+IoU: 0.7527
+Dice: 0.8589
+Precision: 0.8712
+Recall: 0.8469
+F1: 0.8589
+PixelAcc: 0.9697
+Number of samples: 90
+Threshold: 0.5
+
+Transition scales
+----------------------------------------
+Transition 1 sar: 0.048335
+Transition 1 optical: 0.044223
+Transition 1 fused: 0.043744
+Transition 2 sar: 0.034878
+Transition 2 optical: 0.037580
+Transition 2 fused: 0.042115
+Transition 3 sar: 0.049628
+Transition 3 optical: 0.028204
+Transition 3 fused: 0.041129

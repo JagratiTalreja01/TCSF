@@ -1,0 +1,30 @@
+{
+  "experiments": [
+    {
+      "label": "TCSF v3.1",
+      "directory": "outputs/logs/TCSF_v31_seed2026/metrics.csv",
+      "csv_path": "outputs/logs/TCSF_v31_seed2026/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc",
+        "learning_rate": "learning_rate",
+        "t1_sar_gamma": "t1_sar_gamma",
+        "t1_optical_gamma": "t1_optical_gamma",
+        "t1_fused_gamma": "t1_fused_gamma",
+        "t2_sar_gamma": "t2_sar_gamma",
+        "t2_optical_gamma": "t2_optical_gamma",
+        "t2_fused_gamma": "t2_fused_gamma",
+        "t3_sar_gamma": "t3_sar_gamma",
+        "t3_optical_gamma": "t3_optical_gamma",
+        "t3_fused_gamma": "t3_fused_gamma"
+      },
+      "rows": 20
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "python": "3.10.13",
+  "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+  "pytorch": "1.11.0",
+  "device": "cuda",
+  "cuda_available": true,
+  "cuda_version": "11.3",
+  "cudnn_version": 8200,
+  "gpu_name": "NVIDIA RTX A4000",
+  "gpu_total_memory_gb": 15.731201171875,
+  "gpu_compute_capability": "8.6"
+}

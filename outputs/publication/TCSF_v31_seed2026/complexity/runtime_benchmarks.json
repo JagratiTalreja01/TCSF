@@ -1,0 +1,32 @@
+{
+  "benchmarks": [
+    {
+      "precision": "fp32",
+      "batch_size": 1,
+      "warmup_iterations": 30,
+      "timed_iterations": 100,
+      "mean_latency_ms_per_batch": 80.11177724227309,
+      "median_latency_ms_per_batch": 79.74125538021326,
+      "latency_std_ms": 1.5976119481428779,
+      "p95_latency_ms_per_batch": 81.95450250059366,
+      "mean_latency_ms_per_image": 80.11177724227309,
+      "fps": 12.482559174487065,
+      "peak_allocated_memory_mb": 285.77685546875,
+      "peak_reserved_memory_mb": 348.0
+    },
+    {
+      "precision": "amp_fp16",
+      "batch_size": 1,
+      "warmup_iterations": 30,
+      "timed_iterations": 100,
+      "mean_latency_ms_per_batch": 405.61550157144666,
+      "median_latency_ms_per_batch": 405.7546788826585,
+      "latency_std_ms": 1.0496047779368423,
+      "p95_latency_ms_per_batch": 407.19025768339634,
+      "mean_latency_ms_per_image": 405.61550157144666,
+      "fps": 2.4653890103454446,
+      "peak_allocated_memory_mb": 260.96044921875,
+      "peak_reserved_memory_mb": 308.0
+    }
+  ]
+}

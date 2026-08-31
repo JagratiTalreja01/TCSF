@@ -1,0 +1,29 @@
+{
+  "model": "MultimodalSegFormer",
+  "checkpoint": "outputs/checkpoints/SegFormer_B0_200ep_seed2026/best_model.pth",
+  "threshold": 0.5,
+  "macro": {
+    "IoU": 0.49627845731767906,
+    "IoU_std": 0.30969428585232367,
+    "Dice": 0.6009282938947083,
+    "Dice_std": 0.30780560646258287,
+    "Precision": 0.6275995486941728,
+    "Precision_std": 0.2934562462628509,
+    "Recall": 0.6739947135962902,
+    "Recall_std": 0.30717006832745924,
+    "F1": 0.6009282938947083,
+    "F1_std": 0.30780560646258287,
+    "PixelAcc": 0.967090013292603,
+    "PixelAcc_std": 0.06098349090431826,
+    "num_samples": 90
+  },
+  "micro": {
+    "IoU": 0.7377459590040346,
+    "Dice": 0.8490837860175623,
+    "Precision": 0.8470337306975763,
+    "Recall": 0.8511437888123626,
+    "F1": 0.8490837860175623,
+    "PixelAcc": 0.9670900132921063,
+    "num_samples": 90
+  }
+}

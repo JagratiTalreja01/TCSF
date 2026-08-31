@@ -1,0 +1,53 @@
+experiment:
+  name: TCSF_v31_seed2026
+  output_dir: outputs/
+  seed: 2026
+
+dataset:
+  name: SEN1FLOODS11
+  root: data/SEN1FLOODS11/v1.1
+  num_workers: 2
+  pin_memory: true
+  image_size: 256
+  sar_channels: 2
+  optical_channels: 13
+  num_classes: 1
+
+training:
+  epochs: 20
+  batch_size: 1
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  optimizer: AdamW
+  scheduler: CosineAnnealingLR
+  device: cuda
+  use_amp: false
+  grad_clip: 1.0
+
+model:
+  encoder_dim: 24
+  decoder_dim: 24
+  num_encoder_stages: 4
+  use_data_fusion: true
+  use_cross_state_fusion: true
+  use_decision_fusion: true
+  use_multi_scale: true
+  use_reliability_guidance: true
+  use_cross_scale_propagation: true
+  fusion_variant: tri_level_controlled
+  transition_residual_init: 0.001
+
+loss:
+  bce_weight: 1.0
+  dice_weight: 1.0
+  boundary_weight: 0.2
+  consistency_weight: 0.1
+
+checkpoint:
+  save_every: 1
+  resume: ""
+
+logging:
+  log_every: 20
+  save_predictions: true
+  tensorboard: true

@@ -1,0 +1,115 @@
+{
+  "experiments": [
+    {
+      "label": "U-Net",
+      "directory": "outputs/checkpoints/UNet_200ep_seed2026/history.csv",
+      "csv_path": "outputs/checkpoints/UNet_200ep_seed2026/history.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "val_iou",
+        "val_dice": "val_dice",
+        "precision": "val_precision",
+        "recall": "val_recall",
+        "pixel_accuracy": "val_pixel_accuracy",
+        "learning_rate": "learning_rate"
+      },
+      "rows": 200
+    },
+    {
+      "label": "DeepLabV3+",
+      "directory": "outputs/checkpoints/DeepLabV3Plus_200ep_seed2026/history.csv",
+      "csv_path": "outputs/checkpoints/DeepLabV3Plus_200ep_seed2026/history.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "val_iou",
+        "val_dice": "val_dice",
+        "precision": "val_precision",
+        "recall": "val_recall",
+        "pixel_accuracy": "val_pixel_accuracy",
+        "learning_rate": "learning_rate"
+      },
+      "rows": 200
+    },
+    {
+      "label": "Swin-UNet",
+      "directory": "outputs/checkpoints/SwinUNet_200ep_seed2026/history.csv",
+      "csv_path": "outputs/checkpoints/SwinUNet_200ep_seed2026/history.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "val_iou",
+        "val_dice": "val_dice",
+        "precision": "val_precision",
+        "recall": "val_recall",
+        "pixel_accuracy": "val_pixel_accuracy",
+        "learning_rate": "learning_rate"
+      },
+      "rows": 200
+    },
+    {
+      "label": "SegFormer-B0",
+      "directory": "outputs/checkpoints/SegFormer_B0_200ep_seed2026/history.csv",
+      "csv_path": "outputs/checkpoints/SegFormer_B0_200ep_seed2026/history.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "val_iou",
+        "val_dice": "val_dice",
+        "precision": "val_precision",
+        "recall": "val_recall",
+        "pixel_accuracy": "val_pixel_accuracy",
+        "learning_rate": "learning_rate"
+      },
+      "rows": 200
+    },
+    {
+      "label": "Vision Mamba",
+      "directory": "outputs/checkpoints/VisionMamba_200ep_seed2026/history.csv",
+      "csv_path": "outputs/checkpoints/VisionMamba_200ep_seed2026/history.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "val_iou",
+        "val_dice": "val_dice",
+        "precision": "val_precision",
+        "recall": "val_recall",
+        "pixel_accuracy": "val_pixel_accuracy",
+        "learning_rate": "learning_rate"
+      },
+      "rows": 200
+    },
+    {
+      "label": "TCSF v3.1",
+      "directory": "outputs/logs/TCSF_v31_final_200ep/metrics.csv",
+      "csv_path": "outputs/logs/TCSF_v31_final_200ep/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc",
+        "learning_rate": "learning_rate",
+        "t1_sar_gamma": "t1_sar_gamma",
+        "t1_optical_gamma": "t1_optical_gamma",
+        "t1_fused_gamma": "t1_fused_gamma",
+        "t2_sar_gamma": "t2_sar_gamma",
+        "t2_optical_gamma": "t2_optical_gamma",
+        "t2_fused_gamma": "t2_fused_gamma",
+        "t3_sar_gamma": "t3_sar_gamma",
+        "t3_optical_gamma": "t3_optical_gamma",
+        "t3_fused_gamma": "t3_fused_gamma"
+      },
+      "rows": 200
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "profiler": "fvcore",
+  "macs": null,
+  "gmacs": null,
+  "flops": 67040790528,
+  "gflops": 67.040790528,
+  "note": "FLOPs may be underestimated when custom operations are listed as unsupported.",
+  "unsupported_operations": {
+    "aten::silu_": 137,
+    "aten::sigmoid": 68,
+    "aten::mul": 131,
+    "aten::rsub": 22,
+    "aten::add": 80,
+    "aten::feature_dropout": 22,
+    "aten::tanh": 9,
+    "aten::softmax": 1
+  }
+}

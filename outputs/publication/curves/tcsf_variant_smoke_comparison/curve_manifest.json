@@ -1,0 +1,78 @@
+{
+  "experiments": [
+    {
+      "label": "ACSF v2",
+      "directory": "outputs/logs/ACSF_Smoke_v2/metrics.csv",
+      "csv_path": "outputs/logs/ACSF_Smoke_v2/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc"
+      },
+      "rows": 10
+    },
+    {
+      "label": "TCSF v3",
+      "directory": "outputs/logs/ACSF_TCSF_Smoke_v3/metrics.csv",
+      "csv_path": "outputs/logs/ACSF_TCSF_Smoke_v3/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc"
+      },
+      "rows": 10
+    },
+    {
+      "label": "TCSF v3.1",
+      "directory": "outputs/logs/ACSF_TCSF_Smoke_v31/metrics.csv",
+      "csv_path": "outputs/logs/ACSF_TCSF_Smoke_v31/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc"
+      },
+      "rows": 20
+    },
+    {
+      "label": "RU-TCSF",
+      "directory": "outputs/logs/RU_TCSF_Smoke_v1/metrics.csv",
+      "csv_path": "outputs/logs/RU_TCSF_Smoke_v1/metrics.csv",
+      "detected_columns": {
+        "epoch": "epoch",
+        "train_loss": "train_loss",
+        "val_loss": "val_loss",
+        "val_iou": "iou",
+        "val_dice": "dice",
+        "precision": "precision",
+        "recall": "recall",
+        "pixel_accuracy": "pixel_acc",
+        "learning_rate": "learning_rate",
+        "t1_sar_gamma": "t1_sar_gamma",
+        "t1_optical_gamma": "t1_optical_gamma",
+        "t1_fused_gamma": "t1_fused_gamma",
+        "t2_sar_gamma": "t2_sar_gamma",
+        "t2_optical_gamma": "t2_optical_gamma",
+        "t2_fused_gamma": "t2_fused_gamma",
+        "t3_sar_gamma": "t3_sar_gamma",
+        "t3_optical_gamma": "t3_optical_gamma",
+        "t3_fused_gamma": "t3_fused_gamma"
+      },
+      "rows": 21
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "checkpoint": "outputs/checkpoints/TCSF_v31_seed2026/best_model.pth",
+  "config": "configs/acsf_base.yaml",
+  "seed": 2026,
+  "parameters": {
+    "total_parameters": 21019249,
+    "trainable_parameters": 21019249,
+    "non_trainable_parameters": 0,
+    "buffer_elements": 16416,
+    "model_size_mb": 80.24505996704102
+  },
+  "operation_counts": {
+    "profiler": "fvcore",
+    "macs": null,
+    "gmacs": null,
+    "flops": 67040790528,
+    "gflops": 67.040790528,
+    "note": "FLOPs may be underestimated when custom operations are listed as unsupported.",
+    "unsupported_operations": {
+      "aten::silu_": 137,
+      "aten::sigmoid": 68,
+      "aten::mul": 131,
+      "aten::rsub": 22,
+      "aten::add": 80,
+      "aten::feature_dropout": 22,
+      "aten::tanh": 9,
+      "aten::softmax": 1
+    }
+  },
+  "runtime_benchmarks": [
+    {
+      "precision": "fp32",
+      "batch_size": 1,
+      "warmup_iterations": 30,
+      "timed_iterations": 100,
+      "mean_latency_ms_per_batch": 77.11785432882607,
+      "median_latency_ms_per_batch": 76.91857125610113,
+      "latency_std_ms": 0.7519132951403815,
+      "p95_latency_ms_per_batch": 78.65048199892044,
+      "mean_latency_ms_per_image": 77.11785432882607,
+      "fps": 12.967165758218037,
+      "peak_allocated_memory_mb": 285.77685546875,
+      "peak_reserved_memory_mb": 348.0
+    },
+    {
+      "precision": "amp_fp16",
+      "batch_size": 1,
+      "warmup_iterations": 30,
+      "timed_iterations": 100,
+      "mean_latency_ms_per_batch": 403.31096997484565,
+      "median_latency_ms_per_batch": 403.3660697750747,
+      "latency_std_ms": 0.9373034013095736,
+      "p95_latency_ms_per_batch": 404.77925539016724,
+      "mean_latency_ms_per_image": 403.31096997484565,
+      "fps": 2.479476320870641,
+      "peak_allocated_memory_mb": 260.96044921875,
+      "peak_reserved_memory_mb": 308.0
+    }
+  ],
+  "test_metrics": {
+    "IoU": 0.5803327901799183,
+    "Dice": 0.6833198354956542,
+    "Precision": 0.7718294819043643,
+    "Recall": 0.6982150320973112,
+    "F1": 0.6833194040888873,
+    "PixelAcc": 0.96972825790621,
+    "macro_mean": {
+      "IoU": 0.5803327901799183,
+      "Dice": 0.6833198354956542,
+      "Precision": 0.7718294819043643,
+      "Recall": 0.6982150320973112,
+      "F1": 0.6833194040888873,
+      "PixelAcc": 0.96972825790621
+    },
+    "macro_std": {
+      "IoU": 0.29164293367922717,
+      "Dice": 0.2863358762381639,
+      "Precision": 0.21271748406408836,
+      "Recall": 0.3053179500391732,
+      "F1": 0.2863357356857117,
+      "PixelAcc": 0.0554601984534945
+    },
+    "micro_global": {
+      "IoU": 0.7526624628754701,
+      "Dice": 0.8588789670779301,
+      "Precision": 0.8711891148262214,
+      "Recall": 0.8469118637306923,
+      "F1": 0.8588784671781651,
+      "PixelAcc": 0.9697282579208425
+    },
+    "threshold": 0.5,
+    "number_of_samples": 90,
+    "global_confusion_counts": {
+      "TP": 543338,
+      "FP": 80336,
+      "FN": 98214,
+      "TN": 5176352
+    },
+    "evaluation_wall_time_seconds": 14.66961304936558
+  },
+  "transition_scales": [
+    {
+      "transition": 1,
+      "modality": "sar",
+      "gamma": 0.048335473984479904
+    },
+    {
+      "transition": 1,
+      "modality": "optical",
+      "gamma": 0.04422307759523392
+    },
+    {
+      "transition": 1,
+      "modality": "fused",
+      "gamma": 0.04374392330646515
+    },
+    {
+      "transition": 2,
+      "modality": "sar",
+      "gamma": 0.03487822413444519
+    },
+    {
+      "transition": 2,
+      "modality": "optical",
+      "gamma": 0.03758005052804947
+    },
+    {
+      "transition": 2,
+      "modality": "fused",
+      "gamma": 0.04211477190256119
+    },
+    {
+      "transition": 3,
+      "modality": "sar",
+      "gamma": 0.049628254026174545
+    },
+    {
+      "transition": 3,
+      "modality": "optical",
+      "gamma": 0.02820439822971821
+    },
+    {
+      "transition": 3,
+      "modality": "fused",
+      "gamma": 0.04112902656197548
+    }
+  ],
+  "environment": {
+    "python": "3.10.13",
+    "platform": "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+    "pytorch": "1.11.0",
+    "device": "cuda",
+    "cuda_available": true,
+    "cuda_version": "11.3",
+    "cudnn_version": 8200,
+    "gpu_name": "NVIDIA RTX A4000",
+    "gpu_total_memory_gb": 15.731201171875,
+    "gpu_compute_capability": "8.6"
+  }
+}

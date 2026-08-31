@@ -1,0 +1,65 @@
+# ==========================================================
+# Multimodal SegFormer-B0 Baseline
+# Fair 200-epoch comparison configuration for Sen1Floods11
+# ==========================================================
+
+experiment:
+  name: SegFormer_B0_200ep_seed2026
+  output_dir: outputs/
+  seed: 2026
+
+dataset:
+  name: SEN1FLOODS11
+  root: data/SEN1FLOODS11/v1.1
+  num_workers: 8
+  pin_memory: true
+  image_size: 256
+  sar_channels: 2
+  optical_channels: 13
+  num_classes: 1
+
+training:
+  epochs: 200
+  batch_size: 1
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  device: cuda
+  seed: 2026
+  amp: false
+  grad_clip: 1.0
+
+baseline:
+  name: multimodal_segformer_b0
+  fusion: early_channel_concatenation
+
+  # MiT-B0 encoder configuration
+  embed_dims: [32, 64, 160, 256]
+  depths: [2, 2, 2, 2]
+  num_heads: [1, 2, 5, 8]
+  mlp_ratios: [4.0, 4.0, 4.0, 4.0]
+  sr_ratios: [8, 4, 2, 1]
+
+  # SegFormer decoder
+  decoder_channels: 256
+
+  # Regularization
+  dropout: 0.1
+  attention_dropout: 0.0
+  drop_path_rate: 0.1
+
+loss:
+  bce_weight: 1.0
+  dice_weight: 1.0
+  pos_weight: null
+
+scheduler:
+  name: ReduceLROnPlateau
+  factor: 0.5
+  patience: 3
+  min_lr: 0.0000001
+
+evaluation:
+  threshold: 0.5
+
+output:
+  checkpoint_dir: outputs/checkpoints/SegFormer_B0_200ep_seed2026

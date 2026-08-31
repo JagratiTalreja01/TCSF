@@ -1,0 +1,47 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.env
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Large datasets
+data/
+
+# Training / inference outputs
+#outputs/
+
+# Model checkpoints
+*.pth
+*.pt
+*.ckpt
+
+# Archives
+*.zip
+
+# Temporary files
+*.tmp
+*.log
+.DS_Store
+
+# Generated architecture folders
+TCSF_individual_cuboids_PNG/
+TCSF_separate_blocks/
+fnal_architecture_files/
+architecture_files_with Sen1floods11_clips/
+# Keep outputs, but ignore checkpoints
+outputs/checkpoints/
+
+# Model checkpoint files
+*.pth
+*.pt
+*.ckpt

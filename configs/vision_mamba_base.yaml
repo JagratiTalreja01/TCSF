@@ -1,0 +1,63 @@
+# ==========================================================
+# Multimodal Vision Mamba Baseline
+# Fair 200-epoch comparison configuration for Sen1Floods11
+# ==========================================================
+
+experiment:
+  name: VisionMamba_200ep_seed2026
+  output_dir: outputs/
+  seed: 2026
+
+dataset:
+  name: SEN1FLOODS11
+  root: data/SEN1FLOODS11/v1.1
+  num_workers: 8
+  pin_memory: true
+  image_size: 256
+  sar_channels: 2
+  optical_channels: 13
+  num_classes: 1
+
+training:
+  epochs: 200
+  batch_size: 1
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  device: cuda
+  seed: 2026
+  amp: false
+  grad_clip: 1.0
+
+baseline:
+  name: multimodal_vision_mamba
+  fusion: early_channel_concatenation
+
+  # Hierarchical Mamba encoder
+  stage_channels: [32, 64, 128, 256]
+  depths: [2, 2, 3, 2]
+
+  # Mamba U-Net decoder
+  decoder_channels: [128, 64, 32]
+  decoder_depths: [1, 1, 1]
+
+  # Mamba block settings
+  expansion: 2
+  kernel_size: 7
+  dropout: 0.1
+
+loss:
+  bce_weight: 1.0
+  dice_weight: 1.0
+  pos_weight: null
+
+scheduler:
+  name: ReduceLROnPlateau
+  factor: 0.5
+  patience: 3
+  min_lr: 0.0000001
+
+evaluation:
+  threshold: 0.5
+
+output:
+  checkpoint_dir: outputs/checkpoints/VisionMamba_200ep_seed2026
