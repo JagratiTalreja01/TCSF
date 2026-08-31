@@ -8,246 +8,77 @@ The implementation is developed in PyTorch and evaluated on SEN1FLOODS11, SEN12M
 
 Paper status: Manuscript/preprint. A publication link and final bibliographic citation will be added after publication.
 
-Contents
+## Contents
+1. [Introduction](#introduction)
+2. [Key Highlights](#keyhighlights)
+3. [Dependencies](#dependencies)
+4. [Train](#train)
+5. [Test](#test)
+6. [Results](#results)
+7. [Citation](#citation)
+8. [Acknowledgements](#acknowledgements)
 
-Introduction
+## Introduction
 
-Architecture
+Flood mapping benefits from combining Sentinel-1 SAR and Sentinel-2 optical imagery because the two modalities provide complementary information. SAR offers all-weather, day-and-night observations but is affected by speckle noise and complex scattering, while optical imagery provides rich spectral information but can be degraded by clouds, haze, and shadows.
 
-Key Highlights
+TCSF — **Tri-Level Cross-State Fusion Network** — is a reliability-aware multimodal framework that maintains separate SAR and optical feature streams rather than directly concatenating the inputs. It combines **Modality Reliability Estimation, dual Vision Mamba encoders, Cross-State Fusion, controlled tri-level state propagation, and Adaptive Decision Fusion** to learn complementary multimodal representations for flood segmentation.
 
-Repository Structure
+The model uses Sentinel-1 VV/VH and all 13 Sentinel-2 spectral bands.
 
-Dependencies
-
-Dataset Preparation
-
-Training
-
-Testing
-
-Inference
-
-Results
-
-Ablation Study
-
-Baseline Models
-
-Citation
-
-Acknowledgements
-
-Introduction
-
-Flood mapping from satellite imagery is challenging because no single sensing modality is reliable under all conditions. Sentinel-1 SAR provides day-and-night, all-weather observations, but SAR imagery contains speckle noise and complex scattering responses. Sentinel-2 optical imagery provides rich spectral and spatial information, but its quality can be reduced by clouds, haze, shadows, and illumination changes.
-
-TCSF is designed to exploit the complementary strengths of both modalities without simply concatenating them at the input. The framework preserves separate SAR and optical feature streams and allows information exchange only through reliability-guided fusion modules.
-
-The proposed model contains four main ideas:
-
-Modality Reliability Estimation to learn pixel-level confidence fields for SAR and optical observations.
-
-Dual Vision Mamba Encoders to preserve modality-specific representations.
-
-Tri-Level Cross-State Fusion to exchange and propagate SAR, optical, and fused states across multiple semantic scales.
-
-Adaptive Decision Fusion to combine SAR-only, optical-only, and fused predictions using spatially varying learned weights.
-
-The model uses Sentinel-1 VV/VH observations together with all 13 Sentinel-2 spectral bands during training and evaluation.
-
-Architecture
-
-Overall TCSF Framework
+### Overall TCSF Framework
 
 <p align="center">
   <img src="./outputs/publication/architecture_v2/tcsf_v31_overall_architecture.png" width="100%" alt="TCSF Architecture">
 </p>
 
-The TCSF framework consists of:
+TCSF uses four reliability-guided Cross-State Fusion stages connected through three controlled cross-scale transitions. SAR, optical, and fused states are progressively propagated across encoder scales and decoded through separate prediction branches. Adaptive Decision Fusion then combines the three predictions using learned pixel-wise weights.
 
-Sentinel-1 SAR input: VV and VH polarization channels.
-
-Sentinel-2 optical input: 13 spectral bands.
-
-Reliability estimation: pixel-level SAR and optical reliability maps.
-
-Dual hierarchical Vision Mamba encoders: separate SAR and optical feature extraction.
-
-Four Cross-State Fusion stages: bidirectional reliability-guided interaction between modalities.
-
-Three controlled cross-scale transitions: propagation from scale 1→2, 2→3, and 3→4.
-
-Three decoder branches: SAR, optical, and fused.
-
-Adaptive Decision Fusion: learned pixel-wise weighting of the three segmentation predictions.
-
-Final binary flood map: generated using a probability threshold of 0.5.
-
-Cross-State Fusion
+### Cross-State Fusion
 
 <p align="center">
   <img src="./outputs/publication/architecture_v2/tcsf_v31_csf_block.png" width="90%" alt="TCSF Cross-State Fusion">
 </p>
 
-At each feature scale, TCSF applies bidirectional gated interaction between SAR and optical states. Cross-modal information is modulated by both feature compatibility and learned source reliability before being injected into the opposite modality stream.
+Cross-State Fusion enables bidirectional interaction between SAR and optical features while using learned modality reliability to control cross-modal information exchange. Three controlled transitions connect the four fusion stages:
 
-This design allows TCSF to preserve modality-specific information while learning a complementary fused representation.
+**CSF1 → T1 → CSF2 → T2 → CSF3 → T3 → CSF4**
 
-Controlled Tri-Level State Propagation
+Each transition propagates SAR, optical, and fused states using bounded learnable residual coefficients.
 
-TCSF connects the four local Cross-State Fusion stages through three controlled transitions:
+## Key Highlights
 
-CSF1  →  T1  →  CSF2  →  T2  →  CSF3  →  T3  →  CSF4
+* **Reliability-Aware Fusion:** Learns pixel-level SAR and optical confidence maps to reduce the influence of unreliable observations.
 
-Each transition propagates three state types:
+* **Dual Vision Mamba Encoders:** Preserve modality-specific information while capturing long-range spatial dependencies.
 
-SAR state
-Optical state
-Fused state
+* **Tri-Level Cross-State Fusion:** Performs reliability-guided multimodal interaction at four scales with controlled state propagation across three transitions.
 
-Learnable residual coefficients regulate the amount of information propagated between adjacent scales. The coefficients are bounded using tanh and initialized close to zero (1e-3) so that training begins with stable local fusion before progressively learning cross-scale dependence.
+* **Adaptive Decision Fusion:** Combines SAR-only, optical-only, and fused predictions using learned pixel-wise weights.
 
-Across three transitions and three state types, the architecture learns nine interpretable propagation strengths.
+* **Multi-Objective Training:** Uses BCE, Dice, boundary, and consistency losses for accurate flood-region and boundary prediction.
 
-Key Highlights
+* **Multi-Dataset Evaluation:** Evaluated on SEN1FLOODS11, SEN12MS, and DEEPFLOOD against CNN-, Transformer-, and Vision Mamba-based baselines.
 
-Reliability-Aware Multimodal Learning: Learns spatial confidence maps for SAR and optical inputs rather than assuming both modalities are equally reliable everywhere.
+## Dependencies
+* Python 3.1
+* PyTorch >= 1.1.0
+* CUDA 12.2
+* numpy
+* skimage
+* **imageio**
+* matplotlib
+* tqdm
+* cv2 >= 3.xx (Only if you want to use video input/output)
 
-Dual Vision Mamba Encoders: Preserves modality-specific SAR scattering information and optical spectral-textural information using separate hierarchical state-space feature extractors.
+## Train
+### Prepare training data 
 
-Bidirectional Cross-State Fusion: Exchanges information between SAR and optical representations at four feature scales using gated, reliability-aware cross-modal state injection.
+1. Download DEEPFLOOD Dataset, which includes co-registered Sentinel-1 SAR (VV, VH) and Sentinel-2 optical imagery, along with UAV references and auxiliary layers (NDWI, slope, DTM, flood masks). from [DEEPFLOOD dataset](https://figshare.com/articles/dataset/DEEPFLOOD_DATASET_High-Resolution_Dataset_for_Accurate_Flood_Mappingand_Segmentation/28328339).
 
-Tri-Level Controlled State Propagation: Propagates SAR, optical, and fused states through three encoder-level transitions using bounded learnable residual coefficients.
+2. Download SEN1FLOODS11 Dataset, from [SEN1FLOODS11 dataset](https://github.com/cloudtostreet/Sen1Floods11)
 
-Adaptive Decision Fusion: Generates SAR-only, optical-only, and fused predictions and combines them through pixel-wise learned decision weights instead of fixed averaging.
-
-Multi-Objective Training: Uses Binary Cross-Entropy, Dice, boundary, and inter-branch consistency losses to improve regional overlap, flood boundaries, and agreement between prediction branches.
-
-Multimodal Evaluation: Evaluated on SEN1FLOODS11, SEN12MS, and DEEPFLOOD using co-registered Sentinel-1 and Sentinel-2 imagery.
-
-Strong Accuracy-Complexity Trade-off: Achieves improved flood segmentation over CNN-, Transformer-, and Vision-Mamba-based baselines while using approximately 11.02 million trainable parameters.
-
-Repository Structure
-
-TCSF/
-│
-├── configs/                     # Training and model configurations
-├── datasets/                    # Dataset loaders and preprocessing
-├── engine/                      # Training / validation engine
-├── losses/                      # Loss implementations
-├── models/                      # TCSF and baseline architectures
-├── scripts/                     # Model, loss, and dataset checks
-├── utils/                       # Metrics, logging, checkpointing, visualization
-│
-├── outputs/
-│   ├── logs/                    # Training logs
-│   ├── predictions/             # Exported model predictions
-│   ├── publication/             # Publication figures and analyses
-│   └── test/                    # Test results
-│
-├── train.py                     # Train TCSF
-├── test.py                      # Evaluate TCSF
-├── infer.py                     # Generate TCSF predictions and visualizations
-├── publication_evaluate.py      # Publication-oriented evaluation
-├── benchmark_models.py          # Complexity and runtime benchmarking
-├── plot_publication_curves.py   # Training / validation curve generation
-├── generate_visual_comparison.py
-└── requirements.txt
-
-Model checkpoints are intentionally excluded from the repository.
-
-Dependencies
-
-The project uses Python and PyTorch. Install the required packages with:
-
-pip install -r requirements.txt
-
-Main dependencies include:
-
-PyTorch
-
-torchvision
-
-torchaudio
-
-NumPy
-
-pandas
-
-scikit-learn
-
-scikit-image
-
-OpenCV
-
-Pillow
-
-rasterio
-
-tifffile
-
-matplotlib
-
-seaborn
-
-tqdm
-
-PyYAML
-
-einops
-
-timm
-
-TensorBoard
-
-Experimental Environment
-
-The experiments reported in the manuscript were performed with:
-
-GPU: NVIDIA RTX A4000
-GPU Memory: 16 GB
-Input Size: 256 × 256
-Batch Size: 1
-Optimizer: AdamW
-Initial Learning Rate: 1e-4
-Weight Decay: 1e-4
-Scheduler: Cosine Annealing
-Automatic Mixed Precision: Enabled
-Gradient Clipping: 1.0
-
-Dataset Preparation
-
-TCSF uses co-registered Sentinel-1 SAR, Sentinel-2 optical imagery, and binary flood masks.
-
-1. SEN1FLOODS11
-
-Download the SEN1FLOODS11 dataset:
-
-https://github.com/cloudtostreet/Sen1Floods11
-
-Each sample uses:
-
-Sentinel-1: VV + VH
-Sentinel-2: 13 spectral bands
-Label: Binary flood mask
-
-The official train, validation, and test CSV partitions are retained.
-
-2. SEN12MS
-
-Download SEN12MS from:
-
-https://mediatum.ub.tum.de/1474000
-
-The experiments use paired Sentinel-1 and Sentinel-2 observations with the corresponding flood-label preparation used by this project.
-
-3. DEEPFLOOD
-
-Download DEEPFLOOD from:
-
-https://figshare.com/articles/dataset/DEEPFLOOD_DATASET_High-Resolution_Dataset_for_Accurate_Flood_Mappingand_Segmentation/28328339
-
+3. Download SEN12MS Dataset, from [SEN12MS dataset](https://mediatum.ub.tum.de/1474000)
 Input Preparation
 
 All input images and labels are resized to:
