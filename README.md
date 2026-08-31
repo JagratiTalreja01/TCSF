@@ -128,6 +128,22 @@ Qualitative results include the SAR input, optical imagery, ground-truth flood m
 
 ![TCSF Result 3](./figs/Result3.png)
 
+### Computational Complexity and Training Analysis
+
+TCSF was further evaluated in terms of training convergence and computational efficiency. The following curves compare TCSF with the baseline models in terms of validation IoU, validation loss, inference latency, and computational complexity.
+
+![Validation IoU](./figs/IoU_vs_GFLOPs.png)
+
+![Inference Latency](./figs/IoU_vs_Latency.png)
+
+![Validation Loss](./figs/Loss_curve.png)
+
+![Training Convergence](./figs/Training_curve.png)
+
+![Parameter Count](./figs/Param_vs_iou.png)
+
+TCSF achieves a strong balance between segmentation accuracy and computational cost, with **11.02M trainable parameters**, **0.5803 Macro IoU**, and an inference latency of **77.1 ms/image** at a batch size of 1.
+
 
 ## Citation
 
