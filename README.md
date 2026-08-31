@@ -29,7 +29,7 @@ The model uses Sentinel-1 VV/VH and all 13 Sentinel-2 spectral bands.
 ### Overall TCSF Framework
 
 <p align="center">
-  <img src="./outputs/publication/architecture_v2/tcsf_v31_overall_architecture.png" width="100%" alt="TCSF Architecture">
+  <img src="./figs/FIGURE1.png" width="100%" alt="TCSF Architecture">
 </p>
 
 TCSF uses four reliability-guided Cross-State Fusion stages connected through three controlled cross-scale transitions. SAR, optical, and fused states are progressively propagated across encoder scales and decoded through separate prediction branches. Adaptive Decision Fusion then combines the three predictions using learned pixel-wise weights.
@@ -37,7 +37,7 @@ TCSF uses four reliability-guided Cross-State Fusion stages connected through th
 ### Cross-State Fusion
 
 <p align="center">
-  <img src="./outputs/publication/architecture_v2/tcsf_v31_csf_block.png" width="90%" alt="TCSF Cross-State Fusion">
+  <img src="./figs/FIGURE2.png" width="90%" alt="TCSF Cross-State Fusion">
 </p>
 
 Cross-State Fusion enables bidirectional interaction between SAR and optical features while using learned modality reliability to control cross-modal information exchange. Three controlled transitions connect the four fusion stages:
@@ -122,11 +122,11 @@ Qualitative results include the SAR input, optical imagery, ground-truth flood m
 
 <!-- Add your qualitative result figures here -->
 
-![TCSF Result 1](./Figures/Result1.png)
+![TCSF Result 1](./figs/Result1.png)
 
-![TCSF Result 2](./Figures/Result2.png)
+![TCSF Result 2](./figs/Result2.png)
 
-![TCSF Result 3](./Figures/Result3.png)
+![TCSF Result 3](./figs/Result3.png)
 
 
 ## Citation
