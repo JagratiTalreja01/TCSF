@@ -71,590 +71,81 @@ Each transition propagates SAR, optical, and fused states using bounded learnabl
 * tqdm
 * cv2 >= 3.xx (Only if you want to use video input/output)
 
-## Train
-### Prepare training data 
+### Begin to train
 
-1. Download DEEPFLOOD Dataset, which includes co-registered Sentinel-1 SAR (VV, VH) and Sentinel-2 optical imagery, along with UAV references and auxiliary layers (NDWI, slope, DTM, flood masks). from [DEEPFLOOD dataset](https://figshare.com/articles/dataset/DEEPFLOOD_DATASET_High-Resolution_Dataset_for_Accurate_Flood_Mappingand_Segmentation/28328339).
+Use the `train.py` file to begin training the TCSF model.
 
-2. Download SEN1FLOODS11 Dataset, from [SEN1FLOODS11 dataset](https://github.com/cloudtostreet/Sen1Floods11)
-
-3. Download SEN12MS Dataset, from [SEN12MS dataset](https://mediatum.ub.tum.de/1474000)
-Input Preparation
-
-All input images and labels are resized to:
-
-256 × 256 pixels
-
-Training augmentations must be applied consistently to SAR, optical, and label tensors so that their spatial correspondence is preserved.
-
-For qualitative visualization, selected channels may be displayed for interpretability, such as Sentinel-1 VV and Sentinel-2 RGB. Training and evaluation use the complete multimodal input configuration.
-
-Training
-
-The main TCSF model is trained using train.py.
-
-Example
-
+```bash
+# Example Training
 python train.py \
     --config configs/acsf_base.yaml
+```
 
-The principal training protocol in the manuscript uses:
+## Test
 
-Epochs: 20
-Seeds: 42, 123, 2026
+### Quick start
 
-A separate 200-epoch experiment is used for convergence and long-term optimization analysis.
+1. Download the [DEEPFLOOD dataset](https://figshare.com/articles/dataset/DEEPFLOOD_DATASET_High-Resolution_Dataset_for_Accurate_Flood_Mappingand_Segmentation/28328339).
 
-Training Objective
+2. Download the [SEN1FLOODS11 dataset](https://github.com/cloudtostreet/Sen1Floods11).
 
-The complete loss is composed of:
+3. Download the [SEN12MS dataset](https://mediatum.ub.tum.de/1474000).
 
-Ltotal =
-    1.0 × LBCE
-  + 1.0 × LDice
-  + 0.2 × LBoundary
-  + 0.1 × LConsistency
+4. Prepare the corresponding Sentinel-1 SAR, Sentinel-2 optical imagery, and flood masks.
 
-The best checkpoint is selected according to validation IoU.
+Use the `test.py` file to evaluate the trained model.
 
-Testing
-
-Use test.py to evaluate a trained TCSF checkpoint.
-
+```bash
+# Example Testing
 python test.py \
     --config configs/acsf_base.yaml \
     --checkpoint outputs/checkpoints/TCSF_v31_seed2026/best_model.pth
+```
 
-The evaluation reports:
+Use the `infer.py` file to generate prediction maps and visual results.
 
-IoU
-Dice / F1
-Precision
-Recall
-Pixel Accuracy
-
-The binary segmentation threshold is:
-
-0.5
-
-Checkpoints are not included in this GitHub repository and must be generated locally or obtained separately.
-
-Inference
-
-Use infer.py to generate predictions and qualitative visualizations.
-
+```bash
+# Example Inference
 python infer.py \
     --config configs/acsf_base.yaml \
     --checkpoint outputs/checkpoints/TCSF_v31_seed2026/best_model.pth \
     --save_dir outputs/predictions/TCSF_v31_seed2026
+```
 
-The inference pipeline can export:
+## Results
 
-Final flood prediction
+TCSF achieves an IoU of **0.5803** on SEN1FLOODS11, **0.5689** on SEN12MS, and **0.5968** on DEEPFLOOD.
 
-SAR-only prediction
+### Visual Results
 
-Optical-only prediction
+Qualitative results include the SAR input, optical imagery, ground-truth flood mask, final prediction, modality-specific predictions, and learned reliability maps.
 
-SAR reliability map
+<!-- Add your qualitative result figures here -->
 
-Optical reliability map
+![TCSF Result 1](./Figures/Result1.png)
 
-Decision weights
+![TCSF Result 2](./Figures/Result2.png)
 
-Multimodal comparison figures
+![TCSF Result 3](./Figures/Result3.png)
 
-Results
 
-Quantitative Comparison
+## Citation
 
-TCSF was compared against U-Net, DeepLabV3+, SegFormer-B0, Swin-UNet, and Vision Mamba.
+If you find the code helpful in your research or work, please cite the following paper.
 
-SEN1FLOODS11
-
-Model
-
-Params. (M)
-
-IoU
-
-Dice
-
-Precision
-
-Recall
-
-Pixel Acc.
-
-DeepLabV3+
-
-40.38
-
-0.4522
-
-0.5585
-
-0.6340
-
-0.5976
-
-0.9514
-
-SegFormer-B0
-
-3.73
-
-0.4963
-
-0.6009
-
-0.6385
-
-0.6084
-
-0.9552
-
-Swin-UNet
-
-6.61
-
-0.5187
-
-0.6254
-
-0.6412
-
-0.6232
-
-0.9586
-
-U-Net
-
-7.85
-
-0.5236
-
-0.6331
-
-0.6498
-
-0.6635
-
-0.9613
-
-Vision Mamba
-
-5.57
-
-0.5280
-
-0.6320
-
-0.6781
-
-0.6948
-
-0.9619
-
-TCSF (Ours)
-
-11.02
-
-0.5803
-
-0.6833
-
-0.7653
-
-0.6979
-
-0.9680
-
-SEN12MS
-
-Model
-
-Params. (M)
-
-IoU
-
-Dice
-
-Precision
-
-Recall
-
-Pixel Acc.
-
-DeepLabV3+
-
-40.38
-
-0.4387
-
-0.5441
-
-0.6215
-
-0.5819
-
-0.9476
-
-SegFormer-B0
-
-3.73
-
-0.4824
-
-0.5898
-
-0.6267
-
-0.5963
-
-0.9518
-
-Swin-UNet
-
-6.61
-
-0.5049
-
-0.6137
-
-0.6351
-
-0.6104
-
-0.9557
-
-U-Net
-
-7.85
-
-0.5116
-
-0.6208
-
-0.6429
-
-0.6467
-
-0.9589
-
-Vision Mamba
-
-5.57
-
-0.5198
-
-0.6259
-
-0.6672
-
-0.6751
-
-0.9596
-
-TCSF (Ours)
-
-11.02
-
-0.5689
-
-0.6764
-
-0.7488
-
-0.6895
-
-0.9661
-
-DEEPFLOOD
-
-Model
-
-Params. (M)
-
-IoU
-
-Dice
-
-Precision
-
-Recall
-
-Pixel Acc.
-
-DeepLabV3+
-
-40.38
-
-0.4678
-
-0.5729
-
-0.6473
-
-0.6138
-
-0.9536
-
-SegFormer-B0
-
-3.73
-
-0.5095
-
-0.6153
-
-0.6516
-
-0.6241
-
-0.9571
-
-Swin-UNet
-
-6.61
-
-0.5314
-
-0.6376
-
-0.6597
-
-0.6412
-
-0.9605
-
-U-Net
-
-7.85
-
-0.5382
-
-0.6451
-
-0.6689
-
-0.6724
-
-0.9628
-
-Vision Mamba
-
-5.57
-
-0.5467
-
-0.6518
-
-0.6935
-
-0.7012
-
-0.9637
-
-TCSF (Ours)
-
-11.02
-
-0.5968
-
-0.7019
-
-0.7794
-
-0.7146
-
-0.9708
-
-Overall Dataset Performance
-
-Dataset
-
-IoU
-
-Dice
-
-SEN1FLOODS11
-
-0.5803
-
-0.6833
-
-SEN12MS
-
-0.5689
-
-0.6764
-
-DEEPFLOOD
-
-0.5968
-
-0.7019
-
-Computational Efficiency
-
-For SEN1FLOODS11, TCSF achieves:
-
-Trainable Parameters: 11.02 M
-Macro IoU:            0.5803
-Inference Latency:    77.1 ms/image
-
-The model introduces additional computation relative to lightweight baselines, but provides a favorable accuracy-complexity trade-off and remains faster than DeepLabV3+ in the reported benchmark.
-
-Ablation Study
-
-The manuscript evaluates the contribution of the major TCSF components.
-
-Reliability Estimation
-
-Configuration
-
-Macro IoU
-
-Macro Dice
-
-TCSF w/o Reliability
-
-0.5576
-
-0.6612
-
-TCSF with Reliability
-
-0.5612
-
-0.6685
-
-Cross-State Fusion
-
-Configuration
-
-Macro IoU
-
-Macro Dice
-
-TCSF w/o CSF
-
-0.5489
-
-0.6534
-
-TCSF with CSF
-
-0.5583
-
-0.6596
-
-Controlled Tri-Level Propagation
-
-Configuration
-
-Macro IoU
-
-Macro Dice
-
-TCSF w/o Tri-Level Propagation
-
-0.4521
-
-0.5567
-
-TCSF with Tri-Level Propagation
-
-0.5797
-
-0.6833
-
-Adaptive Decision Fusion
-
-Configuration
-
-Macro IoU
-
-Macro Dice
-
-TCSF w/o ADF
-
-0.5594
-
-0.6638
-
-TCSF with ADF
-
-0.5623
-
-0.6693
-
-The controlled tri-level propagation mechanism produces the largest performance change among the reported component ablations, supporting the importance of progressive cross-scale state transfer.
-
-Baseline Models
-
-The repository also contains training, testing, and inference implementations for the evaluated baselines:
-
-U-Net
-DeepLabV3+
-SegFormer-B0
-Swin-UNet
-Vision Mamba
-
-Example baseline scripts include:
-
-train_unet.py
-test_unet.py
-infer_unet.py
-
-train_deeplabv3plus.py
-test_deeplabv3plus.py
-infer_deeplabv3plus.py
-
-train_segformer.py
-test_segformer.py
-infer_segformer.py
-
-train_swin_unet.py
-test_swin_unet.py
-infer_swin_unet.py
-
-train_vision_mamba.py
-test_vision_mamba.py
-infer_vision_mamba.py
-
-Citation
-
-If you find this repository useful in your research, please cite the TCSF manuscript.
-
+```bibtex
 @unpublished{talreja2026tcsf,
-  author = {Jagrati Talreja and Tewodros Syum Gebre and Leila Hashemi Beni},
-  title  = {TCSF: A Tri-Level Cross-State Fusion Network with Vision Mamba and Adaptive Reliability Learning for SAR-Optical Flood Mapping},
-  year   = {2026},
-  note   = {Preprint submitted to Elsevier}
+  author={Talreja, Jagrati and Gebre, Tewodros Syum and Hashemi-Beni, Leila},
+  title={TCSF: A Tri-Level Cross-State Fusion Network with Vision Mamba and Adaptive Reliability Learning for SAR-Optical Flood Mapping},
+  year={2026},
+  note={Manuscript under review}
 }
+```
 
-The citation will be updated when the final publication information becomes available.
+The citation will be updated with the final publication information after publication.
 
-Acknowledgements
+## Acknowledgements
 
-This research was conducted at the College of Science and Technology, North Carolina A&T State University.
+This research article has been made possible by the support of the National Aeronautics and Space Administration (NASA) Award 80NSSC23M0051 and the National Science Foundation (NSF) Award 2401942.
 
-The authors acknowledge the developers and maintainers of the SEN1FLOODS11, SEN12MS, and DEEPFLOOD datasets, as well as the open-source PyTorch and remote-sensing research communities that support reproducible multimodal Earth-observation research.
-
-Authors
-
-Jagrati Talreja
-College of Science and Technology, North Carolina A&T State University
-
-Tewodros Syum Gebre
-College of Science and Technology, North Carolina A&T State University
-
-Leila Hashemi Beni
-College of Science and Technology, North Carolina A&T State University
-Institute for Water, Environment and Health, United Nations University
-
-License
-
-Please refer to the repository license for terms of use. If no license has yet been added, the code remains subject to the copyright of the authors.
+We thank the developers of SEN1FLOODS11, SEN12MS, and DEEPFLOOD for making their datasets publicly available. We also acknowledge the open-source PyTorch and Vision Mamba research communities whose tools and implementations supported this work.
